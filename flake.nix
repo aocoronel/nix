@@ -21,12 +21,10 @@ description = "Elegant Vagrant";
       };
       # ----- USER SETTINGS ----- #
       # This user is in wheel group
-      userSettings = {
-        username = "aocoronel";
-        name = "Augusto Coronel";
-        email = "aoc@getgoogleoff.me";
-        homeDir = "/home/${userSettings.username}";
-      };
+      username = "aocoronel";
+      name = "Augusto Coronel";
+      email = "aoc@getgoogleoff.me";
+      homeDir = "/home/${username}";
       lib = nixpkgs.lib;
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages."${system}";
@@ -35,15 +33,15 @@ description = "Elegant Vagrant";
           aocoronel = lib.nixosSystem {
               system = "${system}";
               modules = [ ./configuration.nix ];
-              specialArgs = {
-                 inherit username;
-              };
             };
         };
       homeConfigurations = {
           aocoronel = home-manager.lib.homeManagerConfiguration {
               inherit pkgs;
               modules = [ ./home.nix ];
+              extraSpecialArgs = {
+                 inherit username;
+              };
             };
         };
     };
