@@ -1,7 +1,9 @@
-{ config, pkgs, ... }:
+{ config, pkgs, username, ... }:
 
 {
-  home.username = "aocoronel";
+  # home.username = "aocoronel";
+  # home.homeDirectory = "/home/aocoronel";
+  home.username = username;
   home.homeDirectory = "/home/aocoronel";
 
   # This value determines the Home Manager release that your configuration is
