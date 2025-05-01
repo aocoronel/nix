@@ -50,7 +50,7 @@
       aocoronel = lib.nixosSystem {
         system = "${system}";
         modules = [
-          ./modules/core.nix
+          (./. + "/profiles/" + ("/" + userSettings.profile) + "/configuration.nix")
         ];
         specialArgs = {
           # inherit pkgs-unstable;
