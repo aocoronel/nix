@@ -1,9 +1,9 @@
 <h1 align="center">🍚 NixOS Dotfiles</h1>
 
 <div align="center">
-<img src=https://img.shields.io/github/repo-size/aocoronel/dotfiles-nixos?color=7c5cff&label=SIZE&logo=googlecloudstorage&style=for-the-badge&logoColor=D9E0EE&labelColor=292324>
+<img src=https://img.shields.io/github/repo-size/aocoronel/nix?color=7c5cff&label=SIZE&logo=googlecloudstorage&style=for-the-badge&logoColor=D9E0EE&labelColor=292324>
 <img src=https://img.shields.io/badge/Keep%20It%20Simple-Stupid-7c5cff?logo=nixos&style=for-the-badge&logoColor=D9E0EE&labelColor=292324>
-<img src=https://img.shields.io/github/license/aocoronel/dotfiles-nixos?color=7c5cff&label=LICENSE&logo=github&style=for-the-badge&logoColor=D9E0EE&labelColor=292324>
+<img src=https://img.shields.io/github/license/aocoronel/nix?color=7c5cff&label=LICENSE&logo=github&style=for-the-badge&logoColor=D9E0EE&labelColor=292324>
 </div>
 
 > [!NOTE]
