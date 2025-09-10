@@ -193,10 +193,10 @@ function main() {
 
   echo -e "\nStep 10 - Configuring dotfiles\n"
 
-  git clone https://codeberg.org/aocoronel/dotfiles $HOME/dotfiles
+  git clone https://github.com/aocoronel/dotfiles $HOME/dotfiles --recursive
   sudo mv $HOME/dotfiles/ $nix_home
   sudo cp -r $HOME/nix/ $nix_home
-  sudo chroot /mnt/ bash -c "cd /home/$default_user/dotfiles && just stow"
+  sudo chroot /mnt/ bash -c "cd /home/$default_user/dotfiles && just stow apply-theme"
 
   if [ "$USE_DEFAULT" -ne 1 ]; then
     bye
