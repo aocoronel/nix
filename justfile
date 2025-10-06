@@ -9,7 +9,7 @@ list:
 
 # Rebuild using Flakes
 f-switch:
-  sudo nixos-rebuild switch --flake .#install
+  sudo nixos-rebuild switch --flake .#default
 
 # Update flake.lock
 f-update:

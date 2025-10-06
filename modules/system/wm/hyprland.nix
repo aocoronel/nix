@@ -58,5 +58,6 @@
     swww
     wf-recorder
     wttrbar
+    ydotool
   ];
 }

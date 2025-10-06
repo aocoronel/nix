@@ -8,6 +8,7 @@
     (./. + "../../profiles/" + ("/" + userSettings.profile + "/") + "/hardware-configuration.nix") # User Hardware
     (./. + "/system/wm/" + ("/" + userSettings.wm + "/") + ".nix") # Window Manager
     ./system/boot-loader.nix
+    ./system/software/cli.nix
     ./system/disks.nix
     ./system/flatpak.nix
     ./system/fonts.nix
@@ -42,56 +43,47 @@
     uid = 1000;
   };
 
-  environment.systemPackages = with pkgs; [
-    # All Users
-    age
-    bash-completion
-    brightnessctl
-    cryptsetup
-    curl
-    direnv
-    ffmpeg
-    fzf
-    gh
-    git
-    git-crypt
-    gitleaks
-    gnutar
-    gocryptfs
-    gvfs
-    home-manager
-    imagemagick
-    jmtpfs
-    jq
-    just
-    killall
-    lazygit
-    less
-    lsof
-    man
-    moreutils
-    mtpfs
-    nmap
-    oh-my-posh
-    openssl
-    polkit
-    pulseaudio
-    pwgen
-    ripgrep
-    rmlint
-    rsync
-    sd
-    srm
-    stow
-    tldr
-    tree
-    udiskie
-    unzip
-    wget
-    ydotool
-    zip
-    zoxide
-  ];
+  # services.udiskie.enable = true;
+  # services.udiskie.tray = "never";
+
+  # gtk = {
+  #   enable = true;
+  #   iconTheme = {
+  #     name = userSettings.iconName;
+  #     package = userSettings.iconTheme;
+  #   };
+  #   theme = {
+  #     name = userSettings.themeName;
+  #     package = userSettings.gtkTheme;
+  #   };
+  # };
+
+  # xdg = {
+  #   userDirs = {
+  #     enable = true;
+  #     createDirectories = true;
+  #     music = "${userSettings.homeDir}/media/music";
+  #     videos = "${userSettings.homeDir}/media/videos";
+  #     pictures = "${userSettings.homeDir}/media/pictures";
+  #     templates = "${userSettings.homeDir}/templates";
+  #     download = "${userSettings.homeDir}/downloads";
+  #     documents = "${userSettings.homeDir}/documents";
+  #     desktop = null;
+  #     publicShare = null;
+  #   };
+  # };
+
+  # xdg.mimeApps = {
+  #   enable = true;
+  #   defaultApplications = {
+  #     "text/html" = "app.zen_browser.zen.desktop";
+  #     "x-scheme-handler/http" = "librewolf.desktop";
+  #     "x-scheme-handler/https" = "app.zen_browser.zen.desktop";
+  #     "x-scheme-handler/about" = "app.zen_browser.zen.desktop";
+  #     "x-scheme-handler/unknown" = "app.zen_browser.zen.desktop";
+  #     "inode/directory" = "yazi.desktop";
+  #   };
+  # };
 
   environment.shells = with pkgs; [bash zsh];
   users.defaultUserShell = pkgs.bash;

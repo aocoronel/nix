@@ -7,7 +7,7 @@
     builtins.elem (lib.getName pkg) [
       "obsidian"
     ];
-  home.packages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     obsidian
   ];
 }

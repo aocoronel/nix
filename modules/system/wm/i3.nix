@@ -20,6 +20,7 @@
       enable = true;
       extraPackages = with pkgs; [
         dmenu
+ 	alacritty
         i3status
         i3blocks
       ];

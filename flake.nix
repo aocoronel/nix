@@ -23,7 +23,6 @@
     home-manager,
     nix-flatpak,
     nixpkgs,
-    leta-searcher,
     # nixpkgs-unstable,
     ...
   }: let
@@ -39,10 +38,10 @@
     # ----- USER SETTINGS ----- #
     # This user is in wheel group
     userSettings = {
-      username = "aocoronel"; # aocoronel,admin,user
+      username = "aoc"; # aocoronel,admin,user
       name = "Augusto Coronel"; # Augusto Coronel,Admin,User
       email = "aoc@getgoogleoff.me"; # john@doe.com
-      profile = "desktop"; # desktop,laptop
+      profile = "laptop"; # desktop,laptop
       homeDir = "/home/${userSettings.username}";
       editor = "neovide"; # emacs,neovide
       themeName = "rose-pine";
@@ -50,7 +49,7 @@
       iconTheme = pkgs.rose-pine-icon-theme;
       gtkTheme = pkgs.rose-pine-gtk-theme;
       displayManager = "ly"; # ly,sddm
-      wm = "hyprland"; # hyprland,gnome,plasma
+      wm = "i3"; # hyprland,gnome,plasma
       term = "alacritty"; # alacritty,ghostty,foot
     };
     lib = nixpkgs.lib;
@@ -69,57 +68,9 @@
           {
             _module.args.disks = ["/dev/sda"];
           }
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.${userSettings.username} = import (./. + "/profiles/" + ("/" + userSettings.profile) + "/home.nix");
-            home-manager.extraSpecialArgs = {
-              # inherit pkgs-unstable;
-              inherit pkgs;
-              inherit leta-searcher;
-              inherit system;
-              inherit systemSettings;
-              inherit userSettings;
-            };
-          }
         ];
         specialArgs = {
           # inherit pkgs-unstable;
-          inherit system;
-          inherit systemSettings;
-          inherit userSettings;
-        };
-      };
-      nixos = lib.nixosSystem {
-        system = "${system}";
-        modules = [
-          (./. + "/profiles/" + ("/" + userSettings.profile) + "/configuration.nix")
-          nix-flatpak.nixosModules.nix-flatpak
-          disko.nixosModules.disko
-          ./profiles/disks/ext4-luks.nix
-          {
-            _module.args.disks = ["/dev/sda"];
-          }
-        ];
-        specialArgs = {
-          # inherit pkgs-unstable;
-          inherit system;
-          inherit systemSettings;
-          inherit userSettings;
-        };
-      };
-    };
-    homeConfigurations = {
-      nixos = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [
-          (./. + "/profiles/" + ("/" + userSettings.profile) + "/home.nix")
-        ];
-        extraSpecialArgs = {
-          # inherit pkgs-unstable;
-          inherit pkgs;
-          inherit leta-searcher;
           inherit system;
           inherit systemSettings;
           inherit userSettings;

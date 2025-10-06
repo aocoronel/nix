@@ -1,10 +1,10 @@
 {pkgs, ...}: {
-  home.packages = with pkgs; [
-    age
+  environment.systemPackages = with pkgs; [
+    # age
     # atomicparsley
     bash-completion
     bat
-    bc
+    # bc
     brightnessctl
     btop
     cmus
@@ -16,16 +16,16 @@
     fastfetch
     fd
     ffmpeg
-    figlet
+    # figlet
     fzf
     gh
     git
-    git-crypt
+    # git-crypt
     gitleaks
     gnutar
-    gocryptfs
+    # gocryptfs
     gvfs
-    home-manager
+    # home-manager
     imagemagick
     jmtpfs
     jq
@@ -33,40 +33,40 @@
     killall
     lazygit
     less
-    libargon2
+    # libargon2
     lsof
     man
     moreutils
     mtpfs
-    mupdf
-    ncdu
-    nmap
+    # mupdf
+    # ncdu
+    # nmap
     oath-toolkit
     # odt2txt
-    oh-my-posh
+    # oh-my-posh
     onefetch
     openssl
     polkit
     pulseaudio
-    pwgen
+    # pwgen
     ranger
     ripgrep
-    rmlint
+    # rmlint
     rsync
-    sd
+    # sd
     sqlite
-    srm
+    # srm
     stow
-    tldr
+    # tldr
     tmux
     tmuxp
-    tree
+    # tree
     udiskie
     ueberzugpp
     unzip
     wget
     yazi
-    ydotool
+    pinentry-curses
     yt-dlp
     zip
     zoxide
