@@ -43,9 +43,11 @@
     uid = 1000;
   };
 
+  # WARNING:This doesn't work
   # services.udiskie.enable = true;
   # services.udiskie.tray = "never";
 
+  # WARNING:This doesn't work
   # gtk = {
   #   enable = true;
   #   iconTheme = {
@@ -58,6 +60,7 @@
   #   };
   # };
 
+  # WARNING:This doesn't work
   # xdg = {
   #   userDirs = {
   #     enable = true;
@@ -73,6 +76,7 @@
   #   };
   # };
 
+  # WARNING:This doesn't work
   # xdg.mimeApps = {
   #   enable = true;
   #   defaultApplications = {

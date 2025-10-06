@@ -1,7 +1,6 @@
 {pkgs, ...}: {
   environment.systemPackages = with pkgs; [
-    imath
-    pystring
-    python3Full
+    taskwarrior2
+    vit
   ];
 }

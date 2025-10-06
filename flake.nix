@@ -13,9 +13,6 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest"; # Declare flatpaks
     # nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     nixpkgs.url = "nixpkgs/nixos-25.05";
-
-    # Scripts
-    leta-searcher.url = "github:aocoronel/search-sh";
   };
 
   outputs = {

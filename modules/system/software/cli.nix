@@ -46,6 +46,7 @@
     # oh-my-posh
     onefetch
     openssl
+    pinentry-curses
     polkit
     pulseaudio
     # pwgen
@@ -66,7 +67,6 @@
     unzip
     wget
     yazi
-    pinentry-curses
     yt-dlp
     zip
     zoxide
