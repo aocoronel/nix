@@ -10,11 +10,11 @@ Usage:
   install.sh
 
 Commands:
-help                        Displays this message and exits
+  help                        Displays this message and exits
 
 Flags:
--d                          Skip some installation steps (Use default config values)
--h                          Displays this message and exits
+  -d                          Skip some installation steps (Use default config values)
+  -h                          Displays this message and exits
 EOF
 }
 
@@ -110,7 +110,7 @@ EOF
 }
 
 function setup_disk() {
-  local disk_options=($HOME/nix/profiles/disks/*.nix)
+  local disk_options=($PWD/profiles/disks/*.nix)
   echo "Select a disk layout:"
   select disk_layout_option in "${disk_options[@]}"; do
     if [ -n "$disk_layout_option" ]; then
@@ -182,7 +182,7 @@ function main() {
   if [ ! -d "/nix/.rw-store" ]; then
     sudo mount -o remount,size=10G,noatime /nix/.rw-store
   fi
-  sudo nixos-install --flake .#aocoronel || exit 1
+  sudo nixos-install --flake .#default || exit 1
 
   echo -e "\nStep 9 - Finishing installation\n"
   default_user=$(awk -F' = |"' "/username/ {print \$3}" "flake.nix" | head -n 1)
@@ -196,7 +196,7 @@ function main() {
   git clone https://github.com/aocoronel/dotfiles $HOME/dotfiles --recursive
   sudo mv $HOME/dotfiles/ $nix_home
   sudo cp -r $HOME/nix/ $nix_home
-  sudo chroot /mnt/ bash -c "cd /home/$default_user/dotfiles && just stow apply-theme"
+  sudo chroot /mnt/ bash -c "cd /home/$default_user/dotfiles && just stow"
 
   if [ "$USE_DEFAULT" -ne 1 ]; then
     bye
