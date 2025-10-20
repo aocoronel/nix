@@ -13,6 +13,7 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest"; # Declare flatpaks
     # nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     nixpkgs.url = "nixpkgs/nixos-25.05";
+    mango.url = "github:DreamMaoMao/mango";
   };
 
   outputs = {
@@ -20,12 +21,13 @@
     home-manager,
     nix-flatpak,
     nixpkgs,
+    mango,
     # nixpkgs-unstable,
     ...
   }: let
     # ----- SYSTEM SETTINGS ----- #
     systemSettings = {
-      hostname = "beelzebub"; # desktop,nixos,home
+      hostname = "nix"; # desktop,nixos,home
       timezone = "America/Sao_Paulo"; # America/Sao_Paulo,Asia/Tokyo,America/Chicago
       locale = "en_US.UTF-8"; #en_US.UTF-8
       extra_locale = "pt_BR.UTF-8"; # en_US.UTF-8
@@ -46,7 +48,7 @@
       iconTheme = pkgs.rose-pine-icon-theme;
       gtkTheme = pkgs.rose-pine-gtk-theme;
       displayManager = "ly"; # ly,sddm
-      wm = "i3"; # hyprland,gnome,plasma
+      wm = "dwm"; # hyprland,gnome,plasma
       term = "alacritty"; # alacritty,ghostty,foot
     };
     lib = nixpkgs.lib;
@@ -58,6 +60,10 @@
       default = lib.nixosSystem {
         system = "${system}";
         modules = [
+          inputs.mango.nixosModules.mango
+            {
+              programs.mango.enable = true;
+            }
           (./. + "/profiles/" + ("/" + userSettings.profile) + "/configuration.nix")
           nix-flatpak.nixosModules.nix-flatpak
           disko.nixosModules.disko
