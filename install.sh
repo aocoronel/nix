@@ -168,8 +168,10 @@ function main() {
     vim "$HOME/nix/profiles/$default_profile/configuration.nix"
   fi
 
-  echo -e "\nStep 5 - Selecting Disk Layout\n"
-  setup_disk
+  if [ "$USE_DEFAULT" -ne 1 ]; then
+    echo -e "\nStep 5 - Selecting Disk Layout\n"
+    setup_disk
+  fi
 
   echo -e "\nStep 6 - Applying Disk Layout\n"
   sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount "$HOME/nix/profiles/disks/$disk_layout_option"
