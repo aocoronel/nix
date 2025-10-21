@@ -6,6 +6,11 @@
   services.xserver.windowManager.dwm.enable = true;
   environment.systemPackages = with pkgs; [
     dmenu
+    dunst
+    gsettings-desktop-schemas
+    libnotify
+    rofi
     st
+    xwallpaper
   ];
 }

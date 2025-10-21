@@ -5,8 +5,12 @@
     bash-completion
     bat
     # bc
+    # borgbackup
+    # bpytop
     brightnessctl
     btop
+    # cava
+    # cmatrix
     cmus
     cryptsetup
     curl
@@ -21,7 +25,10 @@
     gh
     git
     # git-crypt
+    git-filter-repo
+    github-cli
     gitleaks
+    gnupg
     gnutar
     # gocryptfs
     gvfs
@@ -38,7 +45,9 @@
     man
     moreutils
     mtpfs
-    # mupdf
+# mupdf
+# mupdf-tools
+    navi
     # ncdu
     # nmap
     oath-toolkit
@@ -46,11 +55,14 @@
     # oh-my-posh
     onefetch
     openssl
+    # pandoc-cli
+    # parallel
     pinentry-curses
-    polkit
     pulseaudio
     # pwgen
     ranger
+    rclone
+    restic
     ripgrep
     # rmlint
     rsync
@@ -58,14 +70,17 @@
     sqlite
     # srm
     stow
+    # tig
     # tldr
     tmux
     tmuxp
     # tree
     udiskie
     ueberzugpp
+    ufw
     unzip
     wget
+    which
     yazi
     yt-dlp
     zip

@@ -9,8 +9,8 @@
     (./. + "/system/wm/" + ("/" + userSettings.wm + "/") + ".nix") # Window Manager
     ./system/boot-loader.nix
     ./system/software/cli.nix
-    ./system/disks.nix
-    ./system/flatpak.nix
+    # ./system/software/gnome-disks.nix
+    # ./system/flatpak.nix
     ./system/fonts.nix
     ./system/hostname.nix
     # ./system/kernel.nix

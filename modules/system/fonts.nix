@@ -5,7 +5,7 @@
     # fira-code
     nerd-fonts.fira-code
     nerd-fonts.jetbrains-mono
-    nerd-fonts.ubuntu
+    # nerd-fonts.ubuntu
   ];
   fonts.fontDir.enable = true;
 }

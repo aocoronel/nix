@@ -19,10 +19,10 @@
     windowManager.i3 = {
       enable = true;
       extraPackages = with pkgs; [
+        alacritty
         dmenu
- 	alacritty
-        i3status
         i3blocks
+        i3status
       ];
     };
   };

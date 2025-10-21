@@ -8,8 +8,6 @@
     ../display-server/display-manager.nix
   ];
 
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-
   environment.systemPackages = with pkgs; [
     alacritty
     cpio
@@ -35,7 +33,7 @@
     rofi-wayland
     slurp
     swayimg
-    swww
+    swaybg
     wf-recorder
     wttrbar
     ydotool

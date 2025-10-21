@@ -5,7 +5,10 @@ in
     packages = with pkgs; [
       autoconf
       automake
-      # cmake
+      cmake
+      make
+      valgrind
+      clang
       gcc
       gnumake
       libtool

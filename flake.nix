@@ -40,7 +40,7 @@
       username = "aoc"; # aocoronel,admin,user
       name = "Augusto Coronel"; # Augusto Coronel,Admin,User
       email = "aoc@getgoogleoff.me"; # john@doe.com
-      profile = "laptop"; # desktop,laptop
+      profile = "desktop"; # desktop,laptop
       homeDir = "/home/${userSettings.username}";
       editor = "neovide"; # emacs,neovide
       themeName = "rose-pine";
@@ -48,7 +48,7 @@
       iconTheme = pkgs.rose-pine-icon-theme;
       gtkTheme = pkgs.rose-pine-gtk-theme;
       displayManager = "ly"; # ly,sddm
-      wm = "dwm"; # hyprland,gnome,plasma
+      wm = "mango"; # hyprland,gnome,plasma,dwm,i3,mango
       term = "alacritty"; # alacritty,ghostty,foot
     };
     lib = nixpkgs.lib;
@@ -60,7 +60,7 @@
       default = lib.nixosSystem {
         system = "${system}";
         modules = [
-          inputs.mango.nixosModules.mango
+          mango.nixosModules.mango
             {
               programs.mango.enable = true;
             }
