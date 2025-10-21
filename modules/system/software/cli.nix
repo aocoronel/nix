@@ -77,7 +77,6 @@
     # tree
     udiskie
     ueberzugpp
-    ufw
     unzip
     wget
     which

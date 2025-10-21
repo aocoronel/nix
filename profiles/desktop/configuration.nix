@@ -21,7 +21,7 @@
     # Applications
     ../../modules/system/software/browser.nix
     ../../modules/system/software/cli.nix
-    ../../modules/system/software/emacs.nix
+    # ../../modules/system/software/emacs.nix
     ../../modules/system/software/email.nix
     # ../../modules/system/software/gnome-disks.nix
     # ../../modules/system/software/media-editor.nix
@@ -30,13 +30,12 @@
     ../../modules/system/software/office.nix
     ../../modules/system/software/password-manager.nix
     ../../modules/system/software/taskwarrior.nix
-    ../../modules/system/software/unfree
-    ../../modules/system/software/virt-manager.nix
     ../../modules/system/software/zola.nix
 
     # Scripts
     # ../../default/leta-searcher.nix
-    (import ../../modules/system/security/sshd.nix { authorizedKeys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAX7m33igDwueGdRAvoxEOTVfB5PJQYEOINBkKc76gXE aocoronel@beelzebub"];
+    (import ../../modules/system/security/sshd.nix {
+      authorizedKeys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAX7m33igDwueGdRAvoxEOTVfB5PJQYEOINBkKc76gXE aocoronel@beelzebub"];
       inherit userSettings;
     })
   ];
