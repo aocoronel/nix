@@ -1,38 +1,33 @@
 #!/usr/bin/env bash
 
-function help() {
+help() {
   cat <<EOF
 NixOS Installer
 
 Usage:
-  install.sh FLAG <FLAG_INPUT> COMMAND INPUT
-  install.sh -h | install.sh help
-  install.sh
-
-Commands:
-  help                        Displays this message and exits
+  install.sh [OPTION]
 
 Flags:
-  -d                          Skip some installation steps (Use default config values)
-  -h                          Displays this message and exits
+  -d        Skip some installation steps (Use default config values)
+  -h        Displays this message and exits
 EOF
 }
 
-function replace_config() {
+replace_config() {
   local file="$1"
   local replacing="$2"
   local interactive="$3"
   local default
 
   if [ ! -f "$file" ] || [ ! -r "$file" ]; then
-    echo "Error: File $file does not exist or is not readable." >&2
+    echo "[ERROR]: File $file does not exist or is not readable." >&2
     exit 1
   fi
 
   mapfile -t options < <(sed -n "s/.*$replacing = \"[^\"]*\"; *# *\(.*\)/\1/p" "$file" | tr ',' '\n')
 
   if [ ${#options[@]} -eq 0 ]; then
-    echo "Error: No $replacing options found in $file." >&2
+    echo "[ERROR]: No $replacing options found in $file." >&2
     exit 1
   fi
 
@@ -65,16 +60,7 @@ function replace_config() {
   echo "✅ Updated $replacing to \"$option\" in $file"
 }
 
-function bye() {
-  cat <<EOF
-Once you reboot you system, you will still need to install Home Manager and run it to install user-side software
-You may run just in this repository with the following recipes:
-- just hm-install # To install Home Manager
-- just hm-switch # To run it
-EOF
-}
-
-function welcome() {
+welcome() {
   local choice
   cat <<EOF
  _   _ _       ___  ____
@@ -94,7 +80,8 @@ This installer will:
   - Install NixOS
   - Reboot
 
-Warning: This is still in work-in-progress. Use with caution.
+Note: this repository is expected to be located at
+      /home/nixos/nix
 EOF
   read -p "Do you want to proceed? (Y/n) " choice
   if [ -z "$choice" ]; then
@@ -109,8 +96,8 @@ EOF
   echo
 }
 
-function setup_disk() {
-  local disk_options=($PWD/profiles/disks/*.nix)
+setup_disk() {
+  local disk_options=(/home/nixos/profiles/disks/*.nix)
   echo "Select a disk layout:"
   select disk_layout_option in "${disk_options[@]}"; do
     if [ -n "$disk_layout_option" ]; then
@@ -130,20 +117,21 @@ function setup_disk() {
   echo "✅ Updated disk layout to \"$disk_layout_option\" in $file"
 }
 
-function main() {
+main() {
   if [ "$USE_DEFAULT" -ne 1 ]; then
     welcome
-  fi
 
-  if [ "$USE_DEFAULT" -ne 1 ]; then
     echo -e "\nStep 1 - Setting up System Settings:\n"
+
     replace_config "flake.nix" "hostname" 0
     replace_config "flake.nix" "timezone" 0
     replace_config "flake.nix" "locale" 0
     replace_config "flake.nix" "extra_locale" 0
     replace_config "flake.nix" "keyboard" 0
     replace_config "flake.nix" "cups" 1
+
     echo -e "\nStep 2 - Setting up User Settings:\n"
+
     replace_config "flake.nix" "username" 0
     replace_config "flake.nix" "name" 0
     replace_config "flake.nix" "email" 0
@@ -158,35 +146,40 @@ function main() {
 
   if [ "$USE_DEFAULT" -ne 1 ]; then
     echo -e "\nStep 4 - Enabling modules\n"
+
     echo "You'll now select what modules you want to enable in the home.nix and configuration.nix"
     echo "You may want to read each modules content in order to enable it or not"
     echo "Once you are done, just save the file"
     read -p "Enter anything to continue" proceed
     unset proceed
-    default_profile=$(awk -F' = |"' "/profile/ {print \$3}" "flake.nix" | head -n 1)
-    vim "$HOME/nix/profiles/$default_profile/home.nix"
-    vim "$HOME/nix/profiles/$default_profile/configuration.nix"
-  fi
 
-  if [ "$USE_DEFAULT" -ne 1 ]; then
+    default_profile=$(awk -F' = |"' "/profile/ {print \$3}" "flake.nix" | head -n 1)
+    vim "/home/nixos/nix/profiles/$default_profile/home.nix"
+    vim "/home/nixos/nix/profiles/$default_profile/configuration.nix"
+
     echo -e "\nStep 5 - Selecting Disk Layout\n"
+
     setup_disk
   fi
 
   echo -e "\nStep 6 - Applying Disk Layout\n"
-  sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount "$HOME/nix/profiles/disks/$disk_layout_option"
+
+  sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount "/home/nixos/nix/profiles/disks/$disk_layout_option"
 
   echo -e "\nStep 7 - Updating Hardware Configuration\n"
+
   sudo nixos-generate-config --no-filesystems --root /mnt
-  sudo mv -f "/mnt/etc/nixos/hardware-configuration.nix" "$HOME/nix/profiles/$default/hardware-configuration.nix"
+  sudo mv -f "/mnt/etc/nixos/hardware-configuration.nix" "/home/nixos/nix/profiles/$default/hardware-configuration.nix"
 
   echo -e "\nStep 8 - Installing NixOS\n"
+
   if [ ! -d "/nix/.rw-store" ]; then
     sudo mount -o remount,size=10G,noatime /nix/.rw-store
   fi
   sudo nixos-install --flake .#default || exit 1
 
   echo -e "\nStep 9 - Finishing installation\n"
+
   default_user=$(awk -F' = |"' "/username/ {print \$3}" "flake.nix" | head -n 1)
   nix_home=/mnt/home/$default_user/
   sudo chroot /mnt /nix/var/nix/profiles/system/activate
@@ -195,14 +188,10 @@ function main() {
 
   echo -e "\nStep 10 - Configuring dotfiles\n"
 
-  git clone https://github.com/aocoronel/dotfiles $HOME/dotfiles --recursive
-  sudo mv $HOME/dotfiles/ $nix_home
-  sudo cp -r $HOME/nix/ $nix_home
+  git clone https://github.com/aocoronel/dotfiles /home/nixos/dotfiles --recursive
+  sudo mv /home/nixos/dotfiles/ $nix_home
+  sudo cp -r /home/nixos/nix/ $nix_home
   sudo chroot /mnt/ bash -c "cd /home/$default_user/dotfiles && just stow"
-
-  if [ "$USE_DEFAULT" -ne 1 ]; then
-    bye
-  fi
 
   read -p "Do you want to reboot now? (Y/n) " reboot_now
   if [ "$reboot_now" == "Y" ] || [ "$reboot_now" == "y" ]; then
@@ -220,7 +209,7 @@ while getopts ":hd" opt; do
     USE_DEFAULT=1
     ;;
   ?)
-    echo "Error: Invalid option '-$OPTARG'" >&2
+    echo "[ERROR]: Invalid option '-$OPTARG'" >&2
     exit 1
     ;;
   esac
@@ -228,15 +217,4 @@ done
 
 shift $((OPTIND - 1))
 
-case "$1" in
-help)
-  help
-  exit 0
-  ;;
-clone)
-  git clone https://github.com/aocoronel/nix $HOME/nix && main
-  ;;
-*)
-  main
-  ;;
-esac
+main
